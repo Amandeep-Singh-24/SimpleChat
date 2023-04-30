@@ -18,6 +18,34 @@ function App() {
   // new state variable for list of convos
   const [conversations, setConversations] = React.useState([]); // default empty array
 
+  // new variables for displaying message history
+  const [conversationId, setConversationId] = React.useState('');
+  const [messageThread, setMessageThread] = React.useState([]);
+
+  React.useEffect(() => {
+    // this will run anytime conversationId changes
+    getConversation();
+  },[conversationId]);
+
+  async function getConversation() {
+    const httpSettings = {
+        method: 'GET',
+        headers: {
+          auth: cookies.get('auth'), // utility to retrive cookie from cookies
+        }
+      };
+      const result = await fetch('/getConversation?conversationId=' + conversationId, httpSettings);
+      const apiRes = await result.json();
+      console.log(apiRes);
+      if (apiRes.status) {
+        // worked
+        console.log(apiRes.data);
+        setMessageThread(apiRes.data); // java side should return list of all convo for this user
+      } else {
+        setErrorMessage(apiRes.message);
+      }
+    }
+
   async function getConversations() {
     const httpSettings = {
       method: 'GET',
@@ -106,6 +134,8 @@ function App() {
       // worked
       setMessage('');
       getConversations();
+      setConversationId(apiRes.data[0].conversationId);
+      getConversation();
     } else {
       setErrorMessage(apiRes.message);
     }
@@ -124,7 +154,12 @@ function App() {
           <button onClick={handleSendMessage}>Send Message</button>
         </div>
         <div>{errorMessage}</div>
-        <div>{conversations.map(conversation => <div>Convo: {conversation.conversationId}</div>)}</div>
+        <div>{conversations.map(conversation => <div onClick={() => setConversationId(conversation.conversationId)}>Convo: {conversation.conversationId}</div>)}</div>
+        <h3>Selected Conversation: {conversationId}</h3>
+
+        <div>
+            {messageThread.map(messageDto => <div>{messageDto.fromId + ": " + messageDto.message}</div>)}
+        </div>
       </div>
     );
   }
