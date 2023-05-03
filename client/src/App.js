@@ -149,30 +149,61 @@ function App() {
         <div>
           To: <input value={toId} onChange={e => setToId(e.target.value)} />
         </div>
-        <textarea value={message} onChange={e => setMessage(e.target.value)} />
-        <div>
-          <button onClick={handleSendMessage}>Send Message</button>
+        <div className="chat-container">
+          <div className="user-list">
+            {conversations.map(conversation => (
+              <div
+                className="user-list-item"
+                onClick={() => {
+                  setConversationId(conversation.conversationId);
+                  setToId(conversation.otherUser); 
+                }}
+              >
+                Convo: {conversation.conversationId}
+              </div>
+            ))}
+          </div>
+          <div className="chat-content">
+            <div className="chat-header">
+              <h3>Selected Conversation: {conversationId}</h3>
+            </div>
+            <div className="message-box">
+              {messageThread.map(messageDto => (
+                <p className="message-text">
+                  <strong>{messageDto.fromId}:</strong> {messageDto.message}
+                </p>
+              ))}
+            </div>
+            <div className="message-input">
+              <textarea
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+              />
+              <button onClick={handleSendMessage}>Send Message</button>
+            </div>
+          </div>
         </div>
         <div>{errorMessage}</div>
-        <div>{conversations.map(conversation => <div onClick={() => setConversationId(conversation.conversationId)}>Convo: {conversation.conversationId}</div>)}</div>
-        <h3>Selected Conversation: {conversationId}</h3>
-
-        <div>
-            {messageThread.map(messageDto => <div>{messageDto.fromId + ": " + messageDto.message}</div>)}
-        </div>
       </div>
     );
   }
-
+  
+  
   return (
     <div className="App">
-      <input value={userName} onChange={e => setUserName(e.target.value)} />
-      <input value={password} onChange={e => setPassword(e.target.value)} type="password" />
-      <button onClick={handleSubmit} disabled={isLoading}>Register</button>
-      <button onClick={handleLogIn} disabled={isLoading}>Log in</button>
-      <div>
-        {isLoading ? 'Loading ...' : null}
-      </div>
+      <input value={userName} onChange={(e) => setUserName(e.target.value)} />
+      <input
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        type="password"
+      />
+      <button onClick={handleSubmit} disabled={isLoading}>
+        Register
+      </button>
+      <button onClick={handleLogIn} disabled={isLoading}>
+        Log in
+      </button>
+      <div>{isLoading ? "Loading ..." : null}</div>
       <div>{errorMessage}</div>
     </div>
   );
