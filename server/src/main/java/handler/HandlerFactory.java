@@ -16,6 +16,9 @@ public class HandlerFactory {
         return new GetConversationHandler();
       case "/createMessage":
         return new CreateMessageHandler();
+      //New path needed for searchUsers
+      case "/searchUsers":
+        return new SearchUsersHandler();
       default:
         return new FallbackHandler();
     }
