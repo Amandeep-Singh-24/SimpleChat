@@ -12,7 +12,7 @@ function App() {
   const [errorMessage, setErrorMessage] = React.useState('');
 
   // new state variables for chat box
-  const [toId, setToId] = React.useState('');
+  const [toId, setToId] = React.useState(['']);
   const [message, setMessage] = React.useState('');
 
   // new state variable for list of convos
@@ -142,13 +142,58 @@ function App() {
     setIsLoading(false);
   };
 
+  async function addBox(){
+    var element = document.querySelector(".boxes");
+    var div = document.createElement("div");
+    var inputBox = document.createElement("input");
+    inputBox.setAttribute("type","text");
+    inputBox.className = "input-box";
+
+    div.append(inputBox);
+    element.append(div);
+  };
+
+  async function removeBox() {
+    var element = document.querySelector(".boxes");
+    var box = element.lastChild;
+    if (box) {
+      element.removeChild(box);
+    }
+  };
+
+  async function collectInputValues() {
+    const inputBoxes = document.querySelectorAll('.input-box');
+    const inputValues = Array.from(inputBoxes).map((box) => box.value);
+    setToId(inputValues);
+  }
+
+  // When collectInputValues updates toId, it will perform handleSendMessage()
+  // collectInputValues() should be called instead of handleSendMessage() else where in the code
+  React.useEffect(() => {
+      handleSendMessage();
+    }, [toId]);
+
+  async function aFunction(){
+    collectInputValues();
+  };
+
   if (isLoggedIn) {
     return (
       <div className="App">
         <h1>Welcome {userName}</h1>
+
         <div>
-          To: <input value={toId} onChange={e => setToId(e.target.value)} />
+          To: <input
+               type="text"
+               className="input-box"/>
+
+          <button onClick={addBox}>+</button>
+          <button onClick={removeBox}>-</button>
         </div>
+        <div className = "boxes"></div>
+
+        <button onClick={aFunction}>Button</button>
+
         <div className="chat-container">
           <div className="user-list">
             {conversations.map(conversation => (
@@ -156,7 +201,7 @@ function App() {
                 className="user-list-item"
                 onClick={() => {
                   setConversationId(conversation.conversationId);
-                  setToId(conversation.otherUser); 
+                  //setToId(conversation.otherUser); //What's the point of this??
                 }}
               >
                 Convo: {conversation.conversationId}
@@ -179,7 +224,7 @@ function App() {
                 value={message}
                 onChange={e => setMessage(e.target.value)}
               />
-              <button onClick={handleSendMessage}>Send Message</button>
+              <button onClick={collectInputValues}>Send Message</button>
             </div>
           </div>
         </div>
@@ -187,8 +232,8 @@ function App() {
       </div>
     );
   }
-  
-  
+
+
   return (
     <div className="App">
       <input value={userName} onChange={(e) => setUserName(e.target.value)} />
