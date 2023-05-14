@@ -173,10 +173,6 @@ function App() {
       handleSendMessage();
     }, [toId]);
 
-  async function aFunction(){
-    collectInputValues();
-  };
-
   if (isLoggedIn) {
     return (
       <div className="App">
@@ -191,8 +187,6 @@ function App() {
           <button onClick={removeBox}>-</button>
         </div>
         <div className = "boxes"></div>
-
-        <button onClick={aFunction}>Button</button>
 
         <div className="chat-container">
           <div className="user-list">
