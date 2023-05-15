@@ -43,13 +43,15 @@ public class UserDao extends BaseDao<UserDto> {
   }
 
   //New method needed for searching users
-  public List<UserDto> searchUsers(String search) {
-    List<UserDto> users = collection.find(Filters.regex("userName", "^" + search))  // 
+  public List<UserDto> searchUsers(String search) { // takes search input
+    List<UserDto> users = collection.find(Filters.regex("userName", "^" + search))  // case sensitive search for userNames in document
             .into(new ArrayList<>())
             .stream()
-            .map(UserDto::fromDocument)
+            .map(UserDto::fromDocument) // converts document to UserDto object
             .collect(Collectors.toList());
-    return users;
+
+    return users; // returns list of users from searchUsers
 }
 
-}
+  }
+
