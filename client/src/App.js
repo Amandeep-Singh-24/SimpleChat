@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import Cookies from 'universal-cookie';
 
+
 const cookies = new Cookies();
 
 function App() {
@@ -21,6 +22,9 @@ function App() {
   // new variables for displaying message history
   const [conversationId, setConversationId] = React.useState('');
   const [messageThread, setMessageThread] = React.useState([]);
+
+  // new variables for searching users
+  const [searchResults, setSearchResults] = React.useState([]);
 
   React.useEffect(() => {
     // this will run anytime conversationId changes
@@ -142,10 +146,64 @@ function App() {
     setIsLoading(false);
   };
 
+  // function to fetch search results
+  // function to fetch search results
+async function searchUsers(searchQuery) {
+  if (searchQuery.length < 1) {
+    setSearchResults([]);
+    return;
+  }
+
+  const httpSettings = {
+    method: 'GET',
+    headers: {
+      auth: cookies.get('auth'),
+    },
+  };
+
+  const result = await fetch('/searchUsers?search=' + searchQuery, httpSettings);
+
+  if (result.ok) {
+    // Check if the response is empty
+    if (result.status === 204) {
+      setSearchResults([]);
+      return;
+    }
+    const apiRes = await result.json();
+    if (apiRes.status) {
+      setSearchResults(apiRes.data);
+    } else {
+      setErrorMessage(apiRes.message);
+    }
+  } else {
+    console.error('Network response was not OK');
+    setErrorMessage('Network response was not OK');
+  }
+}
+
+  
+  function handleUserSelect(user) {
+    setToId(user.userId); // set the 'toId' state to the selected user's id
+  }
+  
+
   if (isLoggedIn) {
     return (
-      <div className="App">
+<div className="App">
         <h1>Welcome {userName}</h1>
+        <div>
+          <input 
+            placeholder="Search Users"
+            onChange={e => searchUsers(e.target.value)}
+          />
+          <div>
+            {searchResults.map(user => (
+              <p key={user.userId} onClick={() => handleUserSelect(user)}>
+              {user.userName}
+            </p>
+            ))}
+          </div>
+        </div>
         <div>
           To: <input value={toId} onChange={e => setToId(e.target.value)} />
         </div>

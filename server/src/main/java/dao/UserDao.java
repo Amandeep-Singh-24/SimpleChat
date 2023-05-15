@@ -1,6 +1,7 @@
 package dao;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import dto.UserDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,5 +41,15 @@ public class UserDao extends BaseDao<UserDto> {
         .map(UserDto::fromDocument)
         .collect(Collectors.toList());
   }
+
+  //New method needed for searching users
+  public List<UserDto> searchUsers(String search) {
+    List<UserDto> users = collection.find(Filters.regex("userName", "^" + search))  // 
+            .into(new ArrayList<>())
+            .stream()
+            .map(UserDto::fromDocument)
+            .collect(Collectors.toList());
+    return users;
+}
 
 }
