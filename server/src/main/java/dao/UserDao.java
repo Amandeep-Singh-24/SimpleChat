@@ -51,12 +51,11 @@ public class UserDao extends BaseDao<UserDto> {
             .collect(Collectors.toList());
 
     return users; // returns list of users from searchUsers
-}
+  }
 
   //Deletes a user document from the database collection based on the specified query.
   //Added for the DeleteUserHandler
-  public void deleteUser(Document query) {
-    collection.deleteOne(query);
+  public void deleteUser(Document query){
+        collection.deleteOne(query);
+        }
   }
-}
-
