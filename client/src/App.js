@@ -345,7 +345,6 @@ async function searchUsers(searchQuery) {
                <button className = "button2"  onClick={handleDelete}>Delete User!</button>
                </div>
               </div>
-              <button onClick={collectInputValues}>Send Message</button>
             </div>
           </div>
         </div>
