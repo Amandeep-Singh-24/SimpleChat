@@ -42,4 +42,5 @@ public class AuthDao extends BaseDao<AuthDto> {
         .map(AuthDto::fromDocument)
         .collect(Collectors.toList());
   }
+  
 }

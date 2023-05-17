@@ -48,6 +48,12 @@
       <artifactId>maven-assembly-plugin</artifactId>
       <version>3.4.2</version>
     </dependency>
+  <!--Inadd natin to-->
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongo-java-driver</artifactId>
+      <version>3.11.0</version>
+    </dependency>
   </dependencies>
 
 

@@ -27,6 +27,8 @@ function App() {
     getConversation();
   },[conversationId]);
 
+  
+
   async function getConversation() {
     const httpSettings = {
         method: 'GET',
@@ -87,6 +89,37 @@ function App() {
     }
     setIsLoading(false);
   };
+
+//logout button
+function logOut(){
+  window.location.reload(false);
+}
+// make a function handleDelete(){ } 
+async function handleDelete() {
+  setIsLoading(true);
+  setErrorMessage('');
+
+  // Prepare the HTTP request settings
+  const httpSettings = {
+    method: 'DELETE',
+    headers: {
+      auth: cookies.get('auth'), // Include authentication token from cookies
+    },
+  };
+
+  // Send the DELETE request to the backend API
+  const result = await fetch(`/deleteUser?userName=${userName}`, httpSettings);
+
+  if (result.status === 200) {
+    //User was successfully deleted
+    logOut(); //Calling the logOut function to handle the logout logic
+  } else {
+    // error message
+    setErrorMessage('Failed to delete user.');
+  }
+
+  setIsLoading(false); //Set isLoading state to false to indicate that the deletion process has completed
+};
 
   async function handleLogIn() {
     setIsLoading(true);
@@ -180,6 +213,14 @@ function App() {
                 onChange={e => setMessage(e.target.value)}
               />
               <button onClick={handleSendMessage}>Send Message</button>
+
+              <div className='buttonlocation'>
+               <button className = "button2" onClick={logOut}>Logout!</button>
+
+               <div className='buttonlocation'>
+               <button className = "button2"  onClick={handleDelete}>Delete User!</button>
+               </div>
+              </div>
             </div>
           </div>
         </div>
@@ -208,5 +249,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

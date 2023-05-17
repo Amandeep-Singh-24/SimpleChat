@@ -104,3 +104,9 @@ textarea {
   height: 50px;
   resize: none;
 }
+.buttonlocation{ 
+  padding-top: 100px;
+}
+.button2 {
+  background-color: #ff2020;
+}

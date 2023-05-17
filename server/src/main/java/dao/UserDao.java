@@ -2,6 +2,8 @@ package dao;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
+
 import dto.UserDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +52,7 @@ public class UserDao extends BaseDao<UserDto> {
             .map(UserDto::fromDocument)
             .collect(Collectors.toList());
   }
-
+  public void deleteUser(Document query) {
+    collection.deleteOne(query);
+}
 }
