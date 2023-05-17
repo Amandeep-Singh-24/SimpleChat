@@ -16,9 +16,12 @@ public class HandlerFactory {
         return new GetConversationHandler();
       case "/createMessage":
         return new CreateMessageHandler();
+      // new endpoint added  
+      case "/deleteUser":
+        return new DeleteUserHandler();
       //New path needed for searchUsers
-      case "/searchUsers":
-        return new SearchUsersHandler();
+       case "/searchUsers":
+         return new SearchUsersHandler();
       default:
         return new FallbackHandler();
     }

@@ -2,6 +2,8 @@ package dao;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
+
 import dto.UserDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +51,13 @@ public class UserDao extends BaseDao<UserDto> {
             .stream()
             .map(UserDto::fromDocument) // converts document to UserDto object
             .collect(Collectors.toList());
-
-    return users; // returns list of users from searchUsers
-}
-
+    
+       return users; // returns list of users from searchUsers
+    }
   }
-
+  //Deletes a user document from the database collection based on the specified query.
+  //Added for the DeleteUserHandler
+  public void deleteUser(Document query) {
+    collection.deleteOne(query);
+    }
+  }

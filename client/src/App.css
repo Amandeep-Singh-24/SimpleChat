@@ -105,6 +105,13 @@ textarea {
   resize: none;
 }
 
+.buttonlocation{ 
+  padding-top: 100px;
+}
+.button2 {
+  background-color: #ff2020;
+}
+
 .user-item {
   padding: 5px;
   margin-bottom: 5px;
@@ -129,4 +136,3 @@ textarea {
 .user-list-box.with-results {
   border: 1px solid green;
 }
-
