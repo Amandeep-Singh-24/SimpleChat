@@ -9,8 +9,9 @@ import response.RestApiAppResponse;
 public class SearchUsersHandler implements BaseHandler {
     public HttpResponseBuilder handleRequest(ParsedRequest request){
         UserDao userDao = UserDao.getInstance();
-        String search = request.getQueryParam("search");
+        String search = request.getQueryParam("search"); // extracts query parameters (userNames)
         var res = new RestApiAppResponse<>(true, userDao.searchUsers(search), null);
         return new HttpResponseBuilder().setStatus("200 OK").setBody(res);
     }
 }
+

@@ -45,16 +45,19 @@ public class UserDao extends BaseDao<UserDto> {
   }
 
   //New method needed for searching users
-  public List<UserDto> searchUsers(String search){
-    return collection.find(Filters.regex("userName", search))
+  public List<UserDto> searchUsers(String search) { // takes search input
+    List<UserDto> users = collection.find(Filters.regex("userName", "^" + search))  // case sensitive search for userNames in document
             .into(new ArrayList<>())
             .stream()
-            .map(UserDto::fromDocument)
+            .map(UserDto::fromDocument) // converts document to UserDto object
             .collect(Collectors.toList());
+    
+       return users; // returns list of users from searchUsers
+    }
   }
   //Deletes a user document from the database collection based on the specified query.
   //Added for the DeleteUserHandler
   public void deleteUser(Document query) {
     collection.deleteOne(query);
-}
-}
+    }
+  }
