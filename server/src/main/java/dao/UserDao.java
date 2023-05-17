@@ -2,8 +2,6 @@ package dao;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.DeleteResult;
-
 import dto.UserDto;
 import java.util.ArrayList;
 import java.util.List;
