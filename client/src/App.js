@@ -338,7 +338,7 @@ async function searchUsers(searchQuery) {
                 value={message}
                 onChange={e => setMessage(e.target.value)}
               />
-              <button onClick={handleSendMessage}>Send Message</button>
+              <button onClick={collectInputValues}>Send Message</button>
               <div className='buttonlocation'>
                <button className = "button2" onClick={logOut}>Logout!</button>
                <div className='buttonlocation'>
