@@ -54,7 +54,7 @@ public class UserDao extends BaseDao<UserDto> {
   }
 
   //Deletes a user document from the database collection based on the specified query.
-  //Added for the DeleteUserHandler
+  //Added method for the DeleteUserHandler
   public void deleteUser(Document query){
         collection.deleteOne(query);
         }
