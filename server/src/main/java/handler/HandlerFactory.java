@@ -22,6 +22,8 @@ public class HandlerFactory {
       //New path needed for searchUsers
        case "/searchUsers":
          return new SearchUsersHandler();
+         case "/createMessage3":
+        return new CreateMessageHandler();
       default:
         return new FallbackHandler();
     }
