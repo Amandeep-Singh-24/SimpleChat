@@ -33,6 +33,8 @@ public class ConversationDao extends BaseDao<ConversationDto> {
     collection.insertOne(conversationDto.toDocument());
   }
 
+
+
   // Todo use .find with a Document filter
   @Override
   public List<ConversationDto> query(Document filter) {

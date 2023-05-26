@@ -70,6 +70,44 @@ function App() {
     }
   }
 
+  async function getBlockusers(){
+    const httpSettings = {
+      method: 'GET',
+      headers: {
+        auth: cookies.get('auth'), 
+      }
+    };
+  const result = await fetch('/getBlockedlist', httpSettings);
+  const apiRes = await result.json();
+  console.log(apiRes);
+  if (apiRes.status) {
+    // worked
+    setBlockedlist(apiRes.data); 
+  } else {
+    setErrorMessage(apiRes.message);
+  }
+  console.log("Test" + apiRes.data)
+}
+
+async function handlrBlockusers(targetUser){
+  console.log(TargetUser)
+  const httpSettings = {
+    method: 'GET',
+    headers: {
+      auth: cookies.get('auth'), 
+    }
+  };
+  const result = await fetch('/blockUser? BlockedUser', targetUser,httpSettings);
+  const apiRes = await result.json();
+  console.log(apiRes);
+  getBlockusers();
+  setErrorMessage(apiRes.message);
+}
+React.useEffect(() => {
+  getConversation();
+},[conversationId]);
+
+
   async function handleSubmit() {
     setIsLoading(true);
     setErrorMessage(''); // fresh error message each time
@@ -374,5 +412,11 @@ async function searchUsers(searchQuery) {
   );
 }
 
+
+// <div>
+//        Block person: <input value={blockedPerson} onChange={e => setBlockedPerson(e.target.value)} />
+//        <button onClick={handleBlockPerson}>Confirm</button>
+//
+//  </div>
 
 export default App;

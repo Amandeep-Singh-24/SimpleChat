@@ -9,12 +9,29 @@ public class ConversationDto extends BaseDto{
   private String conversationId;
   private String userName;
 
+  private String friendName;
+
+  private String BlockedUser;
+  private boolean blockedStatus = false;
+
   public void setConversationId(String conversationId) {
     this.conversationId = conversationId;
   }
 
+  public void setBlockedUser(String blockedUser) {
+    this.BlockedUser = blockedUser;
+  }
+
   public void setUserName(String userName) {
     this.userName = userName;
+  }
+
+  public void setfriendName(String friendName) {
+    this.friendName = friendName;
+  }
+
+  public void setBolckedStatus(boolean status) {
+    this.blockedStatus = status;
   }
 
   public String getConversationId() {
@@ -24,6 +41,14 @@ public class ConversationDto extends BaseDto{
   public String getUserName() {
     return userName;
   }
+
+  public String getBlockedUser() {
+    return BlockedUser;
+  }
+
+  public boolean isBlocked(){return blockedStatus;}
+
+
 
   @Override
   public Document toDocument() {
@@ -40,3 +65,4 @@ public class ConversationDto extends BaseDto{
     return res;
   }
 }
+
